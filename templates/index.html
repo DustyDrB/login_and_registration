@@ -4,18 +4,42 @@
 	<title>Login and Registration</title>
 </head>
 <body>
-	<form action="/register" class="register" method="post">
-		<label for="first_name">First Name</label>
-		<input type="text" id="first_name" name="first_name">
-		<label for="last_name">Last Name</label>
-		<input type="text" id="last_name" name="last_name">
-		<label for="email">Email</label>
-		<input type="text" id="email" name="email">
-		<label for="password">Password</label>
-		<input type="text" id="password" name="password">
-		<label for="confirm_pass">Confirm Password</label>
-		<input type="text" id="confirm_pass" name="confirm_pass">
-		<input type="submit" value="Register">
-	</form>
+	<div class="user_login">
+		<h1>Login</h1>
+		<form action="/login" class="login" method="post">
+			<label for="logemail">Email</label>
+			<input type="text" id="logemail" name="logemail">
+			<label for="logpass">Password</label>
+			<input type="text" id="logpass" name="logpass">
+			<input type="submit" value="Login">
+		</form>
+	</div>
+	<div class="registration">
+		<h1>Register</h1>
+		<form action="/register" class="register" method="post">
+			<label for="first_name">First Name</label>
+			<input type="text" id="first_name" name="first_name">
+			<label for="last_name">Last Name</label>
+			<input type="text" id="last_name" name="last_name">
+			<label for="email">Email</label>
+			<input type="text" id="email" name="email">
+			<label for="password">Password</label>
+			<input type="text" id="password" name="password">
+			<label for="confirm_pass">Confirm Password</label>
+			<input type="text" id="confirm_pass" name="confirm_pass">
+			<input type="submit" value="Register">
+		</form>
+		<p>
+			{% with messages = get_flashed_messages(with_categories=true) %}
+  				{% if messages %}
+    				<ul>
+    				{% for category, message in messages %}
+      					<li>{{ message }}</li>
+    				{% endfor %}
+    					</ul>
+  				{% endif %}
+			{% endwith %}
+		</p>
+	</div>
 </body>
 </html>
