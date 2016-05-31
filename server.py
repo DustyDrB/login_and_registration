@@ -4,10 +4,12 @@ import re
 from flask.ext.bcrypt import Bcrypt
 
 app = Flask(__name__)
-mysql = MySQLConnector(app, 'email')
+mysql = MySQLConnector(app, 'loginreg')
 app.secret_key = "adorable_beagles"
 
 mail_val = re.compile(r'^[a-za-z0-9\.\+_-]+@[a-za-z0-9\._-]+\.[a-za-z]*$')
+num_check = re.compile('[0-9]')
+case_check = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])')
 
 @app.route('/')
 def index():
@@ -52,13 +54,13 @@ def add_user():
   	else:
   		flash("Registration successful! Thank you!")
 
-  		query = "INSERT INTO users (first_name, last_name, email, password, updated_at, created_at) VALUES (:first_name, :last_name, :email, :pass, NOW(), NOW()")
+  		query = "INSERT INTO users (first_name, last_name, email, password, updated_at, created_at) VALUES (:first_name, :last_name, :email, :pass, NOW(), NOW())"
 		pw_hash = bcrypt.generate_password_hash(reqest.form['password'])
 		data = {
-			first_name: request.form['first_name']
-			last_name: request.form['last_name']
-			email: request.form['email']
-			password: request.form['password'] 
+			first_name: request.form['first_name'],
+			last_name: request.form['last_name'],
+			email: request.form['email'],
+			password: request.form['password'],
 		}
 		mysql.query_db(query, data)
 		return redirect('/')
